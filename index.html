@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NIP - Nosso Infinito Particular</title>
+
+    <!-- Fontes do Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Playfair+Display:ital,wght@0,600;0,800;1,400&family=Reenie+Beanie&family=Special+Elite&display=swap"
+        rel="stylesheet">
+
+    <!-- FontAwesome e Tailwind CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Ficheiro CSS Externo -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="selection:bg-pink-200 selection:text-amber-900 overflow-x-hidden">
+    <!-- Elemento de áudio com a sua música personalizada -->
+    <audio id="bgAudio" src="deixa-lagum.mp3" loop></audio>
+
+    <!-- Canvas do Efeito de Pétalas de Rosa -->
+    <canvas id="petalsCanvas"></canvas>
+
+    <!-- Player de Música Flutuante (Estilo Vinil) -->
+    <div class="fixed bottom-4 right-4 z-50 flex items-center gap-3 bg-amber-900/90 text-amber-100 p-2 pr-4 rounded-full shadow-2xl backdrop-blur-md border border-amber-700/50 hover:scale-105 transition-transform cursor-pointer group"
+        id="musicPlayerContainer">
+        <div class="relative w-12 h-12 flex items-center justify-center">
+            <div id="vinylDisk"
+                class="w-12 h-12 rounded-full bg-stone-900 border-2 border-amber-900 flex items-center justify-center shadow-md relative">
+                <div class="w-4 h-4 rounded-full bg-amber-600 border border-stone-900 flex items-center justify-center">
+                    <div class="w-1 h-1 rounded-full bg-stone-900"></div>
+                </div>
+            </div>
+        </div>
+        <div class="text-xs">
+            <div id="songTitle" class="font-bold tracking-wide text-amber-200 font-serif">Trilha Sonora: Deixa - Lagum
+            </div>
+            <div id="songStatus" class="text-[10px] opacity-75">Clique para reproduzir ♫</div>
+        </div>
+        <button id="playBtn"
+            class="w-9 h-9 rounded-full bg-amber-600 text-stone-900 flex items-center justify-center ml-1 shadow hover:bg-amber-500 transition">
+            <i class="fa-solid fa-play text-sm ml-0.5"></i>
+        </button>
+    </div>
+
+    <!-- NAVEGAÇÃO / CAPA (HERO) -->
+    <header
+        class="relative min-h-screen flex flex-col items-center justify-center p-6 text-center overflow-hidden border-b-8 border-amber-950/20 shadow-2xl">
+        <div
+            class="absolute inset-0 opacity-15 bg-[radial-gradient(#5a3921_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none">
+        </div>
+
+        <!-- Polaroids Flutuantes Decorativas na Capa -->
+        <div
+            class="hidden lg:block absolute left-8 top-16 rotate-[-8deg] polaroid shadow-2xl w-52 z-10 hover:rotate-0 transition-transform duration-300">
+            <div class="washi-tape tape-yellow -top-3 left-10"></div>
+            <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=400&q=80"
+                alt="Casal 1" class="w-full h-44 object-cover filter sepia-[0.2]">
+            <div class="p-3 text-center font-handwriting text-stone-800 text-xl">O primeiro olhar ♡</div>
+        </div>
+
+        <div
+            class="hidden lg:block absolute right-12 top-24 rotate-[6deg] polaroid shadow-2xl w-56 z-10 hover:rotate-0 transition-transform duration-300">
+            <div class="washi-tape tape-pink -top-3 right-8"></div>
+            <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=400&q=80"
+                alt="Casal 2" class="w-full h-48 object-cover filter sepia-[0.2]">
+            <div class="p-3 text-center font-handwriting text-stone-800 text-xl">Viagens inesquecíveis</div>
+        </div>
+
+        <div class="relative z-20 max-w-3xl bg-amber-100/60 p-8 sm:p-12 rounded-none backdrop-blur-md  ">
+            <div
+                class="inline-block mb-3 px-4 py-1 bg-amber-900/10 rounded-lg text-amber-900 font-serif text-sm tracking-widest uppercase">
+                Álbum de Memórias Artesanal
+            </div>
+
+            <h1 class="text-2xl sm:text-4xl font-serif italic text-amber-900/90 mb-6 font-semibold">
+                "Nosso Infinito Particular"
+            </h1>
+
+            <p id="coupleNames" class="text-3xl sm:text-4xl font-handwriting text-amber-950 mb-8 transform -rotate-1">
+                Mauricio & Nataly
+            </p>
+
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="#contador"
+                    class="px-6 py-3 bg-amber-900 text-amber-50 rounded-lg font-serif shadow-md hover:bg-amber-800 ">
+                    <i class="fa-solid fa-clock-rotate-left mr-2"></i> Nosso Tempo
+                </a>
+                <a href="#galeria"
+                    class="px-6 py-3 bg-amber-800/20 text-amber-950 rounded-lg font-serif shadow-md hover:bg-amber-800/30">
+                    <i class="fa-solid fa-book-open mr-2"></i> Abrir Álbum
+                </a>
+            </div>
+        </div>
+
+        <a href="#contador"
+            class="absolute bottom-8 z-20 text-amber-900/70 hover:text-amber-950 text-2xl animate-bounce">
+            <i class="fa-solid fa-chevron-down"></i>
+        </a>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 py-12 space-y-24">
+
+        <!-- SEÇÃO 2: CONTADOR DE TEMPO -->
+        <section id="contador" class="scroll-mt-12 text-center">
+            <div class="relative inline-block mb-8">
+                <h2 class="text-4xl sm:text-5xl font-title text-amber-950">O Nosso Tempo</h2>
+                <p class="font-handwriting text-2xl text-amber-800 mt-1">Cada segundo construindo a nossa história</p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-4 max-w-4xl mx-auto">
+                <div class="bg-amber-100/90 border-2 border-amber-900/20  p-4 shadow-lg text-center ">
+                    <div id="years" class="text-4xl sm:text-5xl font-bold font-serif text-amber-950">0</div>
+                    <div class="text-xs uppercase font-bold text-amber-800 tracking-widest mt-1">Anos</div>
+                </div>
+                <div class="bg-amber-100/90 border-2 border-amber-900/20  p-4 shadow-lg text-center ">
+                    <div id="months" class="text-4xl sm:text-5xl font-bold font-serif text-amber-950">0</div>
+                    <div class="text-xs uppercase font-bold text-amber-800 tracking-widest mt-1">Meses</div>
+                </div>
+                <div class="bg-amber-100/90 border-2 border-amber-900/20  p-4 shadow-lg text-center ">
+                    <div id="days" class="text-4xl sm:text-5xl font-bold font-serif text-amber-950">0</div>
+                    <div class="text-xs uppercase font-bold text-amber-800 tracking-widest mt-1">Dias</div>
+                </div>
+                <div class="bg-amber-100/90 border-2 border-amber-900/20  p-4 shadow-lg text-center ">
+                    <div id="hours" class="text-4xl sm:text-5xl font-bold font-serif text-amber-950">0</div>
+                    <div class="text-xs uppercase font-bold text-amber-800 tracking-widest mt-1">Horas</div>
+                </div>
+                <div
+                    class="col-span-2 md:col-span-1 bg-amber-100/90 border-2 border-amber-900/20  p-4 shadow-lg text-center ">
+                    <div id="minutes" class="text-4xl sm:text-5xl font-bold font-serif text-amber-950">0</div>
+                    <div class="text-xs uppercase font-bold text-amber-800 tracking-widest mt-1">Minutos</div>
+                </div>
+            </div>
+            <p id="startDateDisplay" class="text-sm font-serif italic text-amber-900/80 mt-4">Desde 28 de Agosto de 2026
+            </p>
+        </section>
+
+        <!-- SEÇÃO 3: GALERIA / ÁLBUM DE FOTOS -->
+        <section id="galeria" class="scroll-mt-12">
+            <div class="text-center mb-12 relative">
+                <h2 class="text-4xl sm:text-5xl font-title text-amber-950">Nossas Páginas</h2>
+                <p class="font-handwriting text-2xl text-amber-800">Pedaços de momentos congelados no tempo</p>
+
+                <button id="openAddPhotoBtn" onclick="openAddPhotoModal()"
+                    class="relative z-30 mt-4 px-5 py-2 bg-amber-900 text-amber-100 rounded-full text-sm font-serif hover:bg-amber-800 transition inline-flex items-center gap-2 shadow cursor-pointer">
+                    <i class="fa-solid fa-plus"></i> Adicionar Nova Memória
+                </button>
+            </div>
+
+            <div id="polaroidsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-12 px-2">
+                <!-- Injetado dinamicamente via JavaScript -->
+            </div>
+        </section>
+
+        <!-- SEÇÃO 4: A GAVETA DE SEGREDOS (CARTAS) -->
+        <section id="cartas" class="scroll-mt-12">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl sm:text-5xl font-title text-amber-950">Gaveta de Segredos</h2>
+                <p class="font-handwriting text-2xl text-amber-800">Cartas guardadas a sete chaves para dias especiais
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-5xl mx-auto px-4">
+
+                <!-- Envelope 1 -->
+                <div onclick="openLetter(0)"
+                    class="envelope-card -rotate-2 hover:rotate-0 transition-transform cursor-pointer relative p-8 rounded-none shadow-xl flex flex-col items-center text-center group">
+                    <div class="text-amber-950/70 font-serif text-[11px] uppercase tracking-widest mb-1 mt-2">Para ler
+                        em um dia chuvoso</div>
+                    <div class="text-2xl font-title font-bold text-amber-950 mb-6 italic">"Quando Tudo Começou"</div>
+
+                    <div class="wax-seal mt-auto mb-2">
+                        <span>M&N</span>
+                    </div>
+                    <p class="text-xs text-stone-600 font-handwriting text-lg mt-2">Toque para abrir a carta</p>
+                </div>
+
+                <!-- Envelope 2 -->
+                <div onclick="openLetter(1)"
+                    class="envelope-card rotate-1 hover:rotate-0 transition-transform cursor-pointer relative p-8 rounded-none shadow-xl flex flex-col items-center text-center group">
+                    <div class="text-amber-950/70 font-serif text-[11px] uppercase tracking-widest mb-1 mt-2">Para
+                        quando sentir saudades</div>
+                    <div class="text-2xl font-title font-bold text-amber-950 mb-6 italic">"O Seu Sorriso"</div>
+
+                    <div class="wax-seal mt-auto mb-2">
+                        <span>M&N</span>
+                    </div>
+                    <p class="text-xs text-stone-600 font-handwriting text-lg mt-2">Toque para abrir a carta</p>
+                </div>
+
+                <!-- Envelope 3 -->
+                <div onclick="openLetter(2)"
+                    class="envelope-card -rotate-1 hover:rotate-0 transition-transform cursor-pointer relative p-8 rounded-none shadow-xl flex flex-col items-center text-center group">
+                    <div class="text-amber-950/70 font-serif text-[11px] uppercase tracking-widest mb-1 mt-2">Para o
+                        nosso futuro</div>
+                    <div class="text-2xl font-title font-bold text-amber-950 mb-6 italic">"Promessas para o Infinito"
+                    </div>
+
+                    <div class="wax-seal mt-auto mb-2">
+                        <span>M&N</span>
+                    </div>
+                    <p class="text-xs text-stone-600 font-handwriting text-lg mt-2">Toque para abrir a carta</p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SEÇÃO 5: NOSSAS FRASES E MURAL DE POST-ITS -->
+        <section id="frases" class="scroll-mt-12">
+            <div class="text-center mb-10">
+                <h2 class="text-4xl sm:text-5xl font-title text-amber-950">Mural de Memórias & Recadinhos</h2>
+                <p class="font-handwriting text-2xl text-amber-800">Frases marcantes, piadas internas e recados colados
+                    na parede</p>
+            </div>
+
+            <div id="notesBoard" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 p-4">
+                <!-- Post-its serão injetados via JS -->
+            </div>
+
+            <div class="mt-8 text-center relative z-30">
+                <button id="addNoteBtn" onclick="addNewPostIt()"
+                    class="px-5 py-2.5 bg-amber-900 text-amber-100 rounded-full font-serif text-sm hover:bg-amber-800 transition shadow cursor-pointer">
+                    <i class="fa-solid fa-sticky-note mr-2"></i> Colar Novo Post-it
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="text-center py-12 border-t border-amber-900/10 mt-20 text-amber-950/70 font-serif">
+        <p class="font-handwriting text-2xl mb-1 text-amber-950">Feito com todo o meu amor por você ♡</p>
+        <p class="text-xs uppercase tracking-widest">Nosso Infinito Particular</p>
+    </footer>
+
+    <!-- MODAL: CARTA SEGREDA -->
+    <div id="letterModal"
+        class="fixed inset-0 z-50 bg-stone-900/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div
+            class="bg-[#faf6ee] max-w-2xl w-full p-8 sm:p-12 rounded-lg shadow-2xl relative border-8 border-[#f0e8d8] max-h-[90vh] overflow-y-auto">
+            <button onclick="closeModal('letterModal')"
+                class="absolute top-4 right-4 text-stone-600 hover:text-stone-900 text-2xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div id="letterContent"
+                class="font-typewriter text-stone-800 leading-relaxed space-y-4 text-sm sm:text-base"></div>
+        </div>
+    </div>
+    <!-- MODAL: ADICIONAR POLAROID -->
+    <div id="addPhotoModal"
+        class="fixed inset-0 z-50 bg-stone-900/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-amber-50 max-w-md w-full p-6 rounded-2xl shadow-2xl border-2 border-amber-900/30">
+            <h3 class="text-2xl font-title text-amber-950 mb-4">Adicionar Nova Polaroid</h3>
+            <form id="addPhotoForm" class="space-y-4 text-left">
+                <div>
+                    <label class="block text-xs uppercase font-bold text-amber-900 mb-1 font-serif">URL da Foto ou
+                        Enviar Ficheiro</label>
+                    <input type="text" id="photoUrlInput" placeholder="https://exemplo.com/foto.jpg"
+                        class="w-full px-3 py-2 bg-amber-100/50 border border-amber-900/20 rounded-lg text-sm text-amber-950 mb-2">
+                    <input type="file" id="photoFileInput" accept="image/*" class="w-full text-xs text-amber-900">
+                </div>
+                <div>
+                    <label class="block text-xs uppercase font-bold text-amber-900 mb-1 font-serif">Legenda
+                        Manuscrita</label>
+                    <input type="text" id="photoCaptionInput" required placeholder="Ex: Nosso piquenique no parque"
+                        class="w-full px-3 py-2 bg-amber-100/50 border border-amber-900/20 rounded-lg text-sm text-amber-950">
+                </div>
+                <div>
+                    <label class="block text-xs uppercase font-bold text-amber-900 mb-1 font-serif">Data do
+                        Momento</label>
+                    <input type="date" id="photoDateInput" required
+                        class="w-full px-3 py-2 bg-amber-100/50 border border-amber-900/20 rounded-lg text-sm text-amber-950">
+                </div>
+                <div>
+                    <label class="block text-xs uppercase font-bold text-amber-900 mb-1 font-serif">História por Trás da
+                        Foto</label>
+                    <textarea id="photoStoryInput" rows="3" placeholder="Conte brevemente o que aconteceu nesse dia..."
+                        class="w-full px-3 py-2 bg-amber-100/50 border border-amber-900/20 rounded-lg text-sm text-amber-950"></textarea>
+                </div>
+                <div class="flex justify-end gap-3 mt-6">
+                    <button type="button" onclick="closeModal('addPhotoModal')"
+                        class="px-4 py-2 text-amber-900 font-serif text-sm">Cancelar</button>
+                    <button type="submit"
+                        class="px-5 py-2 bg-amber-900 text-amber-50 rounded-lg font-serif text-sm hover:bg-amber-800 transition">Adicionar
+                        ao Álbum</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: DETALHE DE FOTO (POLAROID EXPANDIDA) -->
+    <div id="photoDetailModal"
+        class="fixed inset-0 z-50 bg-stone-900/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div
+            class="bg-amber-50 max-w-xl w-full p-6 sm:p-8 rounded-2xl shadow-2xl border-2 border-amber-900/30 relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeModal('photoDetailModal')"
+                class="absolute top-4 right-4 text-amber-900/60 hover:text-amber-950 text-2xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div id="photoDetailContent" class="text-center"></div>
+        </div>
+    </div>
+
+    <!-- Ficheiro JS Externo -->
+    <script src="script.js"></script>
+</body>
+
+</html>

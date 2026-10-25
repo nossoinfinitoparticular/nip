@@ -1,0 +1,139 @@
+.font-title {
+    font-family: 'Playfair Display', serif;
+}
+
+.font-handwriting {
+    font-family: 'Caveat', cursive;
+}
+
+.font-casual {
+    font-family: 'Reenie Beanie', cursive;
+}
+
+.font-typewriter {
+    font-family: 'Special Elite', monospace;
+}
+
+body {
+    background-color: #f4f1ea;
+    background-image:
+        radial-gradient(rgba(120, 80, 40, 0.08) 1px, transparent 0),
+        linear-gradient(to right, rgba(139, 94, 60, 0.03) 1px, transparent 0);
+    background-size: 24px 24px, 100% 100%;
+    color: #3d2b1f;
+}
+
+.washi-tape {
+    position: absolute;
+    height: 26px;
+    width: 110px;
+    background: rgba(243, 229, 171, 0.65);
+    backdrop-filter: blur(2px);
+    border-left: 2px dashed rgba(0, 0, 0, 0.1);
+    border-right: 2px dashed rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+    z-index: 25;
+}
+
+.tape-yellow {
+    background: rgba(254, 240, 138, 0.7);
+    transform: rotate(-3deg);
+}
+
+.tape-pink {
+    background: rgba(251, 207, 232, 0.7);
+    transform: rotate(4deg);
+}
+
+.tape-green {
+    background: rgba(187, 247, 208, 0.7);
+    transform: rotate(-2deg);
+}
+
+.polaroid {
+    background: #ffffff;
+    padding: 14px 14px 28px 14px;
+    box-shadow: 0 10px 25px -5px rgba(60, 40, 20, 0.2), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    position: relative;
+}
+
+.polaroid:hover {
+    transform: scale(1.03) rotate(0deg) !important;
+    z-index: 30;
+    box-shadow: 0 20px 30px -10px rgba(60, 40, 20, 0.3);
+}
+
+.wax-seal {
+    width: 72px;
+    height: 64px;
+    background: radial-gradient(circle at 35% 35%, #740920, #740808 60%, #7f1d1d 100%);
+    border-radius: 30% 70% 38% 62% / 65% 25% 75% 35%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fef2f2;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-weight: bold;
+    cursor: pointer;
+    position: relative;
+    transform: none !important;
+    /* Força anular qualquer rotação herdada */
+    transition: none !important;
+    /* Remove qualquer transição */
+    filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.35));
+}
+
+.wax-seal:hover {
+    transform: none !important;
+    transition: none !important;
+    filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.35));
+}
+
+.post-it {
+    padding: 20px;
+    box-shadow: 3px 8px 15px rgba(0, 0, 0, 0.15);
+    position: relative;
+    transition: transform 0.2s ease;
+}
+
+.post-it:hover {
+    transform: scale(1.05) rotate(0deg) !important;
+    z-index: 10;
+}
+
+#petalsCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Estilo Envelope Artesanal / Scrapbook */
+.envelope-card {
+    background-color: #f7f2e7;
+    background-image: radial-gradient(rgba(139, 90, 43, 0.08) 1px, transparent 0);
+    background-size: 10px 10px;
+    border: 1px solid #d4c5a9;
+    box-shadow: 3px 8px 20px rgba(60, 40, 20, 0.15), inset 0 0 40px rgba(180, 150, 110, 0.1);
+    min-height: 280px;
+    position: relative;
+}
+
+.envelope-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background: linear-gradient(135deg, transparent 49%, #e6d8c3 50%, transparent 51%),
+        linear-gradient(225deg, transparent 49%, #e6d8c3 50%, transparent 51%);
+    background-size: 100% 100%;
+    opacity: 0.5;
+    pointer-events: none;
+}
